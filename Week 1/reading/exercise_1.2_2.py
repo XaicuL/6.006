@@ -12,4 +12,4 @@ for i in n:
     if lhs < rhs:
         print(f'밑이 {i}일 때 => True')
     elif lhs > rhs:
-        print(f'밑이 {i}일 때 => False')
+        print(f'밑이 {i}일 때 => False') 
