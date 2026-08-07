@@ -1,6 +1,6 @@
-def insertion_sort(A): 
+def insertion_sort(A):
     for j in range(1, len(A)):
-        key = A[j] 
+        key = A[j]
         i = j - 1
 
         while i >= 0 and A[i] > key:
@@ -15,6 +15,8 @@ def insertion_sort(A):
 A = [31, 41, 59, 26, 41, 58]
 result = insertion_sort(A)
 print(result)
+
+
 
 
 
