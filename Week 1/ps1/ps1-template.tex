@@ -1,0 +1,239 @@
+%
+% 6.006 problem set 1 solutions template
+%
+\documentclass[12pt,twoside]{article}
+
+\input{macros-sp20}
+\newcommand{\theproblemsetnum}{1}
+
+\title{6.006 Problem Set 1}
+
+\begin{document}
+
+\handout{Problem Set \theproblemsetnum}
+
+\setlength{\parindent}{0pt}
+\medskip\hrulefill\medskip
+
+{\bf Name:} Your Name
+
+\medskip
+
+{\bf Collaborators:} Name1, Name2
+
+\medskip\hrulefill
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% See below for common and useful latex constructs. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Some useful commands:
+%$f(x) = \Theta(x)$
+%$T(x, y) \leq \log(x) + 2^y + \binom{2n}{n}$
+% {\tt code\_function}
+
+
+% You can create unnumbered lists as follows:
+%\begin{itemize}
+%    \item First item in a list
+%        \begin{itemize}
+%            \item First item in a list
+%                \begin{itemize}
+%                    \item First item in a list
+%                    \item Second item in a list
+%                \end{itemize}
+%            \item Second item in a list
+%        \end{itemize}
+%    \item Second item in a list
+%\end{itemize}
+
+% You can create numbered lists as follows:
+%\begin{enumerate}
+%    \item First item in a list
+%    \item Second item in a list
+%    \item Third item in a list
+%\end{enumerate}
+
+% You can write aligned equations as follows:
+%\begin{align}
+%    \begin{split}
+%        (x+y)^3 &= (x+y)^2(x+y) \\
+%                &= (x^2+2xy+y^2)(x+y) \\
+%                &= (x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3) \\
+%                &= x^3+3x^2y+3xy^2+y^3
+%    \end{split}
+%\end{align}
+
+% You can create grids/matrices as follows:
+%\begin{align}
+%    A =
+%    \begin{bmatrix}
+%        A_{11} & A_{21} \\
+%        A_{21} & A_{22}
+%    \end{bmatrix}
+%\end{align}
+
+% You can include images and PDFs as follows:
+% \includegraphics[width=0.5\textwidth]{img.jpg}
+
+\begin{problems}
+
+\problem  % Problem 1
+
+\begin{problemparts}
+\problempart % Problem 1a
+$(f_5,\, f_3,\, f_4,\, f_1,\, f_2)$
+\begin{itemize}
+    \item $f_5 = \log\log(6006n) = \Theta(\log\log n)$
+    \item $f_3 = \log(n^{6006}) = 6006\log n = \Theta(\log n)$
+    \item $f_4 = (\log n)^{6006}$
+    \item $f_1 = \log(n^n) = n\log n$
+    \item $f_2 = (\log n)^n$
+\end{itemize}
+
+\problempart % Problem 1b
+$(f_1,\, f_2,\, f_5,\, f_4,\, f_3)$
+\begin{itemize}
+    \item $f_1 = 2^n$
+    \item $f_2 = 6006^n$
+    \item $f_5 = 6006^{n^2}$
+    \item $f_4 = 6006^{2^n} = 2^{\Theta(2^n)}$
+    \item $f_3 = 2^{6006^n}$
+\end{itemize}
+
+\problempart % Problem 1c
+$(\{f_2,\, f_5\},\, f_4,\, f_1,\, f_3)$
+\begin{itemize}
+    \item $f_2 = \binom{n}{n-6} = \binom{n}{6} = \Theta(n^6)$ and $f_5 = n^6$, so $f_2 = \Theta(f_5)$
+    \item $f_4 = \binom{n}{n/6}$ grows exponentially in $n$
+    \item $f_1 = n^n$
+    \item $f_3 = (6n)!$ (largest, by Stirling)
+\end{itemize}
+
+\problempart % Problem 1d
+$(f_5,\, f_2,\, f_1,\, f_3,\, f_4)$
+\begin{itemize}
+    \item $f_5 = n^{12+1/n} = \Theta(n^{12})$
+    \item $f_2 = n^{7\sqrt{n}}$
+    \item $f_1 = n^{n+4} + n! = \Theta(n^{n+4})$
+    \item $f_3 = 4^{3n\log n} = n^{6n}$
+    \item $f_4 = 7^{n^2}$
+\end{itemize}
+\end{problemparts}
+
+\newpage
+\problem  % Problem 2
+
+\begin{problemparts}
+\problempart % Problem 2a
+Let $T$ be an empty temporary array.
+\begin{enumerate}
+    \item For $t = 1$ to $k$: append $D.\mathrm{delete\_at}(i)$ to $T$.
+    \item For $t = 0$ to $k-1$: $D.\mathrm{insert\_at}(i,\, T[t])$.
+\end{enumerate}
+Each insertion at the same index $i$ pushes previously inserted items to the right, so the $k$ items are restored in reverse order.
+This uses $k$ deletes and $k$ inserts, each $O(\log n)$, for total $O(k\log n)$ time.
+
+\problempart % Problem 2b
+Let $T$ be an empty temporary array.
+\begin{enumerate}
+    \item For $t = 1$ to $k$: append $D.\mathrm{delete\_at}(i)$ to $T$.
+    \item If $j < i$ (destination is to the left of the removed block):
+        set $p \leftarrow j$.
+        Otherwise (destination is to the right):
+        set $p \leftarrow j - k$.
+    \item For $t = 0$ to $k-1$: $D.\mathrm{insert\_at}(p + t,\, T[t])$.
+\end{enumerate}
+After removing $k$ items starting at $i$, index $j$ is unchanged if $j < i$, and decreases by $k$ if $j \ge i+k$.
+Reinserting $T[0],\ldots,T[k-1]$ at consecutive indices starting at $p$ places them, in order, immediately before the item that was originally at index $j$.
+This uses $k$ deletes and $k$ inserts, each $O(\log n)$, for total $O(k\log n)$ time.
+\end{problemparts}
+
+\newpage
+\problem  % Problem 3
+
+\paragraph{Data structure.}
+Maintain the binder as three sequences $L$, $M$, and $R$:
+\begin{itemize}
+    \item $L$: pages strictly left of bookmark $A$, stored in a dynamic array with the page adjacent to $A$ at the {\em end}.
+    \item $M$: pages strictly between $A$ and $B$, stored in a deque (dynamic array supporting $O(1)$-time access and $O(1)$-amortized insert/delete at {\em both} ends). The front of $M$ is adjacent to $A$; the back is adjacent to $B$.
+    \item $R$: pages strictly right of bookmark $B$, stored in a dynamic array in {\em reverse} order so the page adjacent to $B$ is at the {\em end}.
+\end{itemize}
+Bookmark $A$ sits between $L$ and $M$; bookmark $B$ sits between $M$ and $R$.
+Thus $n = |L| + |M| + |R|$, $A$ is in front of page $|L|$, and $B$ is in front of page $|L|+|M|$.
+
+\paragraph{build($X$).}
+Build a dynamic array from $X$ in $O(|X|)$ time (e.g.\ put every page into $L$, and leave $M$ and $R$ empty until marks are placed).
+{\em Worst-case} $O(|X|)$ if we allocate exact capacity; otherwise {\em amortized} $O(|X|)$ with a growing dynamic array.
+
+\paragraph{place\_mark($i$, $m$).}
+Concatenate $L$, $M$, and $R$ (un-reversing $R$) into one sequence of $n$ pages in $O(n)$ time.
+If $m = A$, rebuild so that $L$ holds pages $0,\ldots,i$, and the remaining pages are split between $M$ and $R$ according to the current position of $B$ (creating $B$'s split if needed).
+If $m = B$, rebuild so that $B$ lies between indices $i$ and $i+1$, keeping $A$ to the left of $B$.
+Store $R$ reversed again.
+{\em Worst-case} $O(n)$.
+
+\paragraph{read\_page($i$).}
+\begin{itemize}
+    \item If $i < |L|$: return $L[i]$.
+    \item Else if $i < |L|+|M|$: return $M[i-|L|]$.
+    \item Else: return $R[|R|-1-(i-|L|-|M|)]$ (because $R$ is reversed).
+\end{itemize}
+{\em Worst-case} $O(1)$.
+
+\paragraph{shift\_mark($m$, $d$).}
+Each step moves one page across the corresponding bookmark using only end operations:
+\begin{itemize}
+    \item $m=A$, $d=+1$: delete front of $M$, insert last into $L$.
+    \item $m=A$, $d=-1$: delete last of $L$, insert front into $M$.
+    \item $m=B$, $d=+1$: delete last of $R$, insert last into $M$.
+    \item $m=B$, $d=-1$: delete last of $M$, insert last into $R$.
+\end{itemize}
+{\em Amortized} $O(1)$ (dynamic-array / deque end updates).
+
+\paragraph{move\_page($m$).}
+The page in front of a bookmark is the first page after it:
+\begin{itemize}
+    \item $m=A$: delete front of $M$, insert last into $R$
+    (that page is now in front of $B$).
+    \item $m=B$: delete last of $R$, insert front into $M$
+    (that page is now in front of $A$).
+\end{itemize}
+{\em Amortized} $O(1)$.
+
+\newpage
+\problem  % Problem 4
+
+\begin{problemparts}
+\problempart % Problem 4a
+For each operation, update only the constant number of pointers adjacent to the end being changed.
+\begin{itemize}
+    \item {\tt insert\_first(x)}: create a new node, point it to the old head, and make it the new head. If the list was empty, it is also the tail.
+    \item {\tt insert\_last(x)}: create a new node, point the old tail to it, and make it the new tail. If the list was empty, it is also the head.
+    \item {\tt delete\_first()}: save the old head item, move the head to the next node, and clear the new head's previous pointer.
+    \item {\tt delete\_last()}: save the old tail item, move the tail to the previous node, and clear the new tail's next pointer.
+\end{itemize}
+Each operation changes $O(1)$ pointers, so each takes $O(1)$ time.
+
+\problempart % Problem 4b
+To remove the consecutive sublist from node $x_1$ through node $x_2$, let
+$a = x_1.{\tt prev}$ and $b = x_2.{\tt next}$.
+Set $a.{\tt next} = b$ if $a$ exists, otherwise update the head to $b$.
+Set $b.{\tt prev} = a$ if $b$ exists, otherwise update the tail to $a$.
+Then clear $x_1.{\tt prev}$ and $x_2.{\tt next}$ and return a new linked-list sequence whose head is $x_1$ and tail is $x_2$.
+This cuts out the whole sublist by changing $O(1)$ pointers, so the operation takes $O(1)$ time.
+
+\problempart % Problem 4c
+To splice a nonempty list $L_2$ after node $x$, let $b = x.{\tt next}$.
+Set $x.{\tt next}$ to $L_2.{\tt head}$ and set $L_2.{\tt head}.{\tt prev}$ to $x$.
+Then set $L_2.{\tt tail}.{\tt next}$ to $b$.
+If $b$ exists, set $b.{\tt prev}$ to $L_2.{\tt tail}$; otherwise update the tail of the main list to $L_2.{\tt tail}$.
+Finally set $L_2.{\tt head} = L_2.{\tt tail} = {\tt None}$ so that $L_2$ is empty.
+Again only $O(1)$ pointers change, so the operation takes $O(1)$ time.
+
+\problempart Submit your implementation to {\small\url{alg.mit.edu}}.
+\end{problemparts}
+
+\end{problems}
+
+\end{document}
