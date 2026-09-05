@@ -35,36 +35,36 @@
 class Stack:
     def __init__(self, n):
         self.S = [None] * (n + 1)  # 1-based처럼 쓰기 위함
-        self.top = 0
+        self.top = 0 #top은 스택의 맨 위를 가리킴
 
     def empty(self):
-        return self.top == 0
+        return self.top == 0 #top이 0과 같으면 True를 반환
 
     def push(self, x):
-        self.top += 1
-        self.S[self.top] = x
+        self.top += 1 #top을 1 증가
+        self.S[self.top] = x #S의 top번째 원소를 x로 설정
 
     def pop(self):
         if self.empty():
-            raise Exception("underflow")
+            raise Exception("underflow") #underflow 오류 발생
         self.top -= 1
-        return self.S[self.top + 1]
+        return self.S[self.top + 1] #S의 top+1번째 원소를 반환
 
 
-s = Stack(7)
+s = Stack(7) #7개의 스택 생성
 for x in [15, 6, 2, 9]:
-    s.push(x)
-print(f"top after init: {s.S[s.top]}")  # 9
+    s.push(x) #x를 스택에 삽입
+print(f"top after init: {s.S[s.top]}")  # 9를 스택에 삽입
 
-s.push(17)
-print(f"top after push(17): {s.S[s.top]}")  # 17
-print(f"top index(1): {s.top}")
+s.push(17) #17을 스택에 삽입
+print(f"top after push(17): {s.S[s.top]}")  # 17을 스택에 삽입
+print(f"top index(1): {s.top}") #top 인덱스를 출력
 
-s.push(3)
-print(f"top after push(3): {s.S[s.top]}")  # 3
-print(f"top index(2): {s.top}")
+s.push(3) #3을 스택에 삽입
+print(f"top after push(3): {s.S[s.top]}")  # 3을 스택에 삽입
+print(f"top index(2): {s.top}") #top 인덱스를 출력
 
-popped = s.pop()
-print(f"popped: {popped}")  # 3
-print(f"top after pop: {s.S[s.top]}")  # 17
-print(f"top index(3): {s.top}")
+popped = s.pop() #3을 스택에서 삭제
+print(f"popped: {popped}")  # 3을 스택에서 삭제
+print(f"top after pop: {s.S[s.top]}")  # 17을 스택에서 삭제
+print(f"top index(3): {s.top}") #top 인덱스를 출력
