@@ -19,8 +19,8 @@ def merge(A, p, q, r):
     n1 = q - p + 1 # n1 은 q - p + 1 로 Assign
     n2 = r - q # n2 은 r - q 로 Assign
 
-    L = [0] * (n1 + 1) # Array name : L , Assign : 첫번째 element 부터 n1 + 1 개의 원소를 가진 배열을 생성
-    R = [0] * (n2 + 1) # Array name : R , Assign : 첫번째 element 부터 n2 + 1 개의 원소를 가진 배열을 생성
+    L = [0] * (n1 + 1) # Array name : L , Assign : 첫번째 element 부터 n1 + 1 개의 원소를 가진 배열을 생성 / Left
+    R = [0] * (n2 + 1) # Array name : R , Assign : 첫번째 element 부터 n2 + 1 개의 원소를 가진 배열을 생성 / Right
 
     for i in range(n1): # loop variable : i , range : 1 to n1
         L[i] = A[p + i - 1] #L[i] 에 A[p + i - 1] 을 Assign
