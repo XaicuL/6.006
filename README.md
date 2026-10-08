@@ -12,7 +12,7 @@
 ## Progress
 
 - [x] Week 1 — Introduction to Algorithms and Data Structures
-- [ ] Week 2 - Sorting and Hashing
+- [x] Week 2 - Sorting and Hashing
 - [ ] Week 3 - Linear-time sorting
 - [ ] Week 4 - Binary Search Trees and AVL Trees
 - [ ] Week 5 - Binary Heaps and Breadth-First Search
